@@ -1160,7 +1160,7 @@ mod test {
         use rand;
         use rand::Rng;
 
-        let tmp : &[_] = &[1, 2, 3, 4];
+        let tmp = [0; 32];
         let mut rng1: rand::StdRng = rand::SeedableRng::from_seed(tmp);
         let mut rng2: rand::StdRng = rand::SeedableRng::from_seed(tmp);
         let mut rng3: rand::StdRng = rand::SeedableRng::from_seed(tmp);

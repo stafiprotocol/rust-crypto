@@ -267,41 +267,41 @@ pub fn scrypt(password: &[u8], salt: &[u8], params: &ScryptParams, output: &mut 
  * * params - The ScryptParams to use
  *
  */
-pub fn scrypt_simple(password: &str, params: &ScryptParams) -> io::Result<String> {
-    let mut rng = try!(OsRng::new());
+// pub fn scrypt_simple(password: &str, params: &ScryptParams) -> io::Result<String> {
+//     let mut rng = try!(OsRng::new());
 
-    // 128-bit salt
-    let salt: Vec<u8> = rng.gen_iter::<u8>().take(16).collect();
+//     // 128-bit salt
+//     let salt: Vec<u8> = rng.gen_iter::<u8>().take(16).collect();
 
-    // 256-bit derived key
-    let mut dk = [0u8; 32];
+//     // 256-bit derived key
+//     let mut dk = [0u8; 32];
 
-    scrypt(password.as_bytes(), &*salt, params, &mut dk);
+//     scrypt(password.as_bytes(), &*salt, params, &mut dk);
 
-    let mut result = "$rscrypt$".to_string();
-    if params.r < 256 && params.p < 256 {
-        result.push_str("0$");
-        let mut tmp = [0u8; 3];
-        tmp[0] = params.log_n;
-        tmp[1] = params.r as u8;
-        tmp[2] = params.p as u8;
-        result.push_str(&*base64::encode_config(&tmp, base64::STANDARD));
-    } else {
-        result.push_str("1$");
-        let mut tmp = [0u8; 9];
-        tmp[0] = params.log_n;
-        write_u32_le(&mut tmp[1..5], params.r);
-        write_u32_le(&mut tmp[5..9], params.p);
-        result.push_str(&*base64::encode_config(&tmp, base64::STANDARD));
-    }
-    result.push('$');
-    result.push_str(&*base64::encode_config(&salt, base64::STANDARD));
-    result.push('$');
-    result.push_str(&*base64::encode_config(&dk, base64::STANDARD));
-    result.push('$');
+//     let mut result = "$rscrypt$".to_string();
+//     if params.r < 256 && params.p < 256 {
+//         result.push_str("0$");
+//         let mut tmp = [0u8; 3];
+//         tmp[0] = params.log_n;
+//         tmp[1] = params.r as u8;
+//         tmp[2] = params.p as u8;
+//         result.push_str(&*base64::encode_config(&tmp, base64::STANDARD));
+//     } else {
+//         result.push_str("1$");
+//         let mut tmp = [0u8; 9];
+//         tmp[0] = params.log_n;
+//         write_u32_le(&mut tmp[1..5], params.r);
+//         write_u32_le(&mut tmp[5..9], params.p);
+//         result.push_str(&*base64::encode_config(&tmp, base64::STANDARD));
+//     }
+//     result.push('$');
+//     result.push_str(&*base64::encode_config(&salt, base64::STANDARD));
+//     result.push('$');
+//     result.push_str(&*base64::encode_config(&dk, base64::STANDARD));
+//     result.push('$');
 
-    Ok(result)
-}
+//     Ok(result)
+// }
 
 /**
  * scrypt_check compares a password against the result of a previous call to scrypt_simple and

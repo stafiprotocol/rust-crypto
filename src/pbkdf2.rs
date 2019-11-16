@@ -127,31 +127,31 @@ pub fn pbkdf2<M: Mac>(mac: &mut M, salt: &[u8], c: u32, output: &mut [u8]) {
  * * c - The iteration count
  *
  */
-pub fn pbkdf2_simple(password: &str, c: u32) -> io::Result<String> {
-    let mut rng = try!(OsRng::new());
+// pub fn pbkdf2_simple(password: &str, c: u32) -> io::Result<String> {
+//     let mut rng = try!(OsRng::new());
 
-    // 128-bit salt
-    let salt: Vec<u8> = rng.gen_iter::<u8>().take(16).collect();
+//     // 128-bit salt
+//     let salt: Vec<u8> = rng.gen_iter::<u8>().take(16).collect();
 
-    // 256-bit derived key
-    let mut dk = [0u8; 32];
+//     // 256-bit derived key
+//     let mut dk = [0u8; 32];
 
-    let mut mac = Hmac::new(Sha256::new(), password.as_bytes());
+//     let mut mac = Hmac::new(Sha256::new(), password.as_bytes());
 
-    pbkdf2(&mut mac, &salt[..], c, &mut dk);
+//     pbkdf2(&mut mac, &salt[..], c, &mut dk);
 
-    let mut result = "$rpbkdf2$0$".to_string();
-    let mut tmp = [0u8; 4];
-    write_u32_be(&mut tmp, c);
-    result.push_str(&base64::encode_config(&tmp, base64::STANDARD)[..]);
-    result.push('$');
-    result.push_str(&base64::encode_config(&salt, base64::STANDARD)[..]);
-    result.push('$');
-    result.push_str(&base64::encode_config(&dk, base64::STANDARD)[..]);
-    result.push('$');
+//     let mut result = "$rpbkdf2$0$".to_string();
+//     let mut tmp = [0u8; 4];
+//     write_u32_be(&mut tmp, c);
+//     result.push_str(&base64::encode_config(&tmp, base64::STANDARD)[..]);
+//     result.push('$');
+//     result.push_str(&base64::encode_config(&salt, base64::STANDARD)[..]);
+//     result.push('$');
+//     result.push_str(&base64::encode_config(&dk, base64::STANDARD)[..]);
+//     result.push('$');
 
-    Ok(result)
-}
+//     Ok(result)
+// }
 
 /**
  * pbkdf2_check compares a password against the result of a previous call to pbkdf2_simple and
