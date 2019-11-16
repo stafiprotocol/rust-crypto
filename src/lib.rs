@@ -6,7 +6,7 @@
 
 #![cfg_attr(feature = "with-bench", feature(test))]
 
-extern crate rand;
+// extern crate rand;
 extern crate hex;
 extern crate time;
 extern crate libc;
