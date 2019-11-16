@@ -35,7 +35,7 @@ assert_eq!(result,
 ```
 */
 
-use std::mem::uninitialized;
+use std::mem::MaybeUninit;
 use cryptoutil::{write_u64_be, FixedBuffer64, FixedBuffer};
 use digest::Digest;
 
@@ -150,10 +150,10 @@ impl Digest for Whirlpool {
 }
 
 fn process_buffer(hash: &mut[u64; 8], buffer: &[u8]) {
-    let mut k: [u64; 8] = unsafe { uninitialized() };
-    let mut block: [u64; 8] = unsafe { uninitialized() };
-    let mut state: [u64; 8] = unsafe { uninitialized() };
-    let mut l: [u64; 8] = unsafe { uninitialized() };
+    let mut k: [u64; 8] = unsafe { MaybeUninit::uninit().assume_init() };
+    let mut block: [u64; 8] = unsafe { MaybeUninit::uninit().assume_init() };
+    let mut state: [u64; 8] = unsafe { MaybeUninit::uninit().assume_init() };
+    let mut l: [u64; 8] = unsafe { MaybeUninit::uninit().assume_init() };
 
     for i in 0..8 {
         block[i] =

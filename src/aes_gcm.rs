@@ -12,7 +12,7 @@ use ghash::{Ghash};
 use util::fixed_time_eq;
 
 pub struct AesGcm<'a> {
-    cipher: Box<SynchronousStreamCipher + 'a>,
+    cipher: Box<dyn SynchronousStreamCipher + 'a>,
     mac: Ghash,
     finished: bool,
     end_tag: [u8; 16]
@@ -88,7 +88,6 @@ mod test {
     use aes::KeySize;
     use aes_gcm::AesGcm;
     use aead::{AeadEncryptor, AeadDecryptor};
-    use hex::decode;
     use std::iter::repeat;
     fn hex_to_bytes(raw_hex: &str) -> Vec<u8> {
         hex::decode(raw_hex).ok().unwrap()

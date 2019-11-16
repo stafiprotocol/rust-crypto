@@ -182,7 +182,6 @@ impl Decryptor for Hc128 {
 mod test {
     use hc128::Hc128;
     use symmetriccipher::SynchronousStreamCipher;
-    use hex::decode;
 
     // Vectors from http://www.ecrypt.eu.org/stream/svn/viewcvs.cgi/ecrypt/trunk/submissions/hc-256/hc-128/verified.test-vectors?rev=210&view=markup
 

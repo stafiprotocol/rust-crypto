@@ -392,7 +392,6 @@ mod digest_tests {
     //use cryptoutil::test::test_digest_1million_random;
     use blake2b::Blake2b;
     use digest::Digest;
-    use hex::decode;
 
     struct Test {
         input: Vec<u8>,
