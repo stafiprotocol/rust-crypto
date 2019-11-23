@@ -27,20 +27,30 @@ pub trait BlockDecryptorX8 {
     fn decrypt_block_x8(&self, input: &[u8], output: &mut [u8]);
 }
 
-#[derive(Debug, Clone, Copy)]
+use sr_std::marker::*;
+use sr_std::prelude::*;
+#[derive(Clone, Copy)]
 pub enum SymmetricCipherError {
     InvalidLength,
-    InvalidPadding
+    InvalidPadding,
 }
 
 pub trait Encryptor {
-    fn encrypt(&mut self, input: &mut RefReadBuffer, output: &mut RefWriteBuffer, eof: bool)
-        -> Result<BufferResult, SymmetricCipherError>;
+    fn encrypt(
+        &mut self,
+        input: &mut RefReadBuffer,
+        output: &mut RefWriteBuffer,
+        eof: bool,
+    ) -> Result<BufferResult, SymmetricCipherError>;
 }
 
 pub trait Decryptor {
-    fn decrypt(&mut self, input: &mut RefReadBuffer, output: &mut RefWriteBuffer, eof: bool)
-        -> Result<BufferResult, SymmetricCipherError>;
+    fn decrypt(
+        &mut self,
+        input: &mut RefReadBuffer,
+        output: &mut RefWriteBuffer,
+        eof: bool,
+    ) -> Result<BufferResult, SymmetricCipherError>;
 }
 
 pub trait SynchronousStreamCipher {
@@ -56,15 +66,23 @@ impl SynchronousStreamCipher for Box<dyn SynchronousStreamCipher + 'static> {
 }
 
 impl Encryptor for Box<dyn SynchronousStreamCipher + 'static> {
-    fn encrypt(&mut self, input: &mut RefReadBuffer, output: &mut RefWriteBuffer, _: bool)
-            -> Result<BufferResult, SymmetricCipherError> {
+    fn encrypt(
+        &mut self,
+        input: &mut RefReadBuffer,
+        output: &mut RefWriteBuffer,
+        _: bool,
+    ) -> Result<BufferResult, SymmetricCipherError> {
         symm_enc_or_dec(self, input, output)
     }
 }
 
 impl Decryptor for Box<dyn SynchronousStreamCipher + 'static> {
-    fn decrypt(&mut self, input: &mut RefReadBuffer, output: &mut RefWriteBuffer, _: bool)
-            -> Result<BufferResult, SymmetricCipherError> {
+    fn decrypt(
+        &mut self,
+        input: &mut RefReadBuffer,
+        output: &mut RefWriteBuffer,
+        _: bool,
+    ) -> Result<BufferResult, SymmetricCipherError> {
         symm_enc_or_dec(self, input, output)
     }
 }

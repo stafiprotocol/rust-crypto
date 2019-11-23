@@ -8,9 +8,8 @@
 //  * This module implements the PBKDF2 Key Derivation Function as specified by
 //  * http://tools.ietf.org/html/rfc2898.
 //  */
-
-// use std::iter::repeat;
-// use std::io;
+// use sr_std::iter::repeat;
+// use sr_std::io;
 // use cryptoutil::copy_memory;
 
 // use rand::{OsRng, Rng};
@@ -80,7 +79,7 @@
 //  *
 //  */
 // pub fn pbkdf2<M: Mac>(mac: &mut M, salt: &[u8], c: u32, output: &mut [u8]) {
-//     assert!(c > 0);
+//     //assert!(c > 0);
 
 //     let os = mac.output_bytes();
 
@@ -247,7 +246,7 @@
 
 // #[cfg(test)]
 // mod test {
-//     use std::iter::repeat;
+//     use sr_std::iter::repeat;
 
 //     use pbkdf2::{pbkdf2, pbkdf2_simple, pbkdf2_check};
 //     use hmac::Hmac;
@@ -319,7 +318,7 @@
 //             let mut mac = Hmac::new(Sha1::new(), &t.password[..]);
 //             let mut result: Vec<u8> = repeat(0).take(t.expected.len()).collect();
 //             pbkdf2(&mut mac, &t.salt[..], t.c, &mut result);
-//             assert!(result == t.expected);
+//             //assert!(result == t.expected);
 //         }
 //     }
 
@@ -332,23 +331,23 @@
 
 //         // This just makes sure that a salt is being applied. It doesn't verify that that salt is
 //         // cryptographically strong, however.
-//         assert!(out1 != out2);
+//         //assert!(out1 != out2);
 
 //         match pbkdf2_check(password, &out1[..]) {
-//             Ok(r) => assert!(r),
+//             Ok(r) => //assert!(r),
 //             Err(_) => panic!()
 //         }
 //         match pbkdf2_check(password, &out2[..]) {
-//             Ok(r) => assert!(r),
+//             Ok(r) => //assert!(r),
 //             Err(_) => panic!()
 //         }
 
 //         match pbkdf2_check("wrong", &out1[..]) {
-//             Ok(r) => assert!(!r),
+//             Ok(r) => //assert!(!r),
 //             Err(_) => panic!()
 //         }
 //         match pbkdf2_check("wrong", &out2[..]) {
-//             Ok(r) => assert!(!r),
+//             Ok(r) => //assert!(!r),
 //             Err(_) => panic!()
 //         }
 //     }

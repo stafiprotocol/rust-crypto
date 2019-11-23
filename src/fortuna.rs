@@ -37,13 +37,12 @@
 //  * However, this appears not to be possible in Rust, due to
 //  *     https://github.com/rust-lang/rust/issues/16799
 //  * The reason is that Rust's process management all happens through its
-//  * stdlib runtime, which explicitly does not support forking, so it provides
+//  * corelib runtime, which explicitly does not support forking, so it provides
 //  * no mechanism with which to detect forks.
 //  *
-//  * What this means is that if you are writing forking code (using `#![no_std]`
+//  * What this means is that if you are writing forking code (using `#![no_core]`
 //  * say) then you need to EXPLICITLY RESEED THE RNG AFTER FORKING.
 //  */
-
 // use cryptoutil::copy_memory;
 
 // use rand::{Rng, SeedableRng};
@@ -113,7 +112,7 @@
 //     /// Generates some `k` 16-byte blocks of random output (PC 9.4.3)
 //     /// This should never be used directly, except by `generate_random_data`.
 //     fn generate_blocks(&mut self, k: usize, out: &mut [u8]) {
-//         assert!(self.ctr[..] != [0; CTR_LEN][..]);
+//         //assert!(self.ctr[..] != [0; CTR_LEN][..]);
 
 //         // Setup AES encryptor
 //         let block_encryptor = AesSafe256Encryptor::new(&self.key[..]);
@@ -128,7 +127,7 @@
 //     /// Generates `n` bytes of random data (9.4.4)
 //     fn generate_random_data(&mut self, out: &mut [u8]) {
 //         let (n, rem) = (out.len() / AES_BLOCK_SIZE, out.len() % AES_BLOCK_SIZE);
-//         assert!(n <= MAX_GEN_SIZE);
+//         //assert!(n <= MAX_GEN_SIZE);
 
 //         // Generate output
 //         self.generate_blocks(n, &mut out[..(n * AES_BLOCK_SIZE)]);
@@ -144,7 +143,6 @@
 //         self.key = new_key;
 //     }
 // }
-
 
 // /// A single entropy pool (not public)
 // #[derive(Clone, Copy)]
@@ -196,10 +194,10 @@
 
 //     /// Adds a random event `e` from source `s` to entropy pool `i` (PC 9.5.6)
 //     pub fn add_random_event(&mut self, s: u8, i: usize, e: &[u8]) {
-//         assert!(i <= NUM_POOLS);
+//         //assert!(i <= NUM_POOLS);
 //         // These restrictions (and `s` in [0, 255]) are part of the Fortuna spec.
-//         assert!(e.len() > 0);
-//         assert!(e.len() <= 32);
+//         //assert!(e.len() > 0);
+//         //assert!(e.len() <= 32);
 //         (&mut self.pool[i]).input(&[s]);
 //         (&mut self.pool[i]).input(&[e.len() as u8]);
 //         (&mut self.pool[i]).input(e);
@@ -227,8 +225,8 @@
 //             while self.reseed_count % (1 << n_pools) == 0 {
 //                 (&mut self.pool[n_pools]).result(&mut hash[n_pools * 32..(n_pools + 1) * 32]);
 //                 n_pools += 1;
-//                 assert!(n_pools < NUM_POOLS);
-//                 assert!(n_pools < 32); // width of counter
+//                 //assert!(n_pools < NUM_POOLS);
+//                 //assert!(n_pools < 32); // width of counter
 //             }
 //             self.generator.reseed(&hash[..n_pools * 32]);
 //         }
@@ -248,7 +246,6 @@
 //         read_u32_le(&ret[..])
 //     }
 // }
-
 
 // impl<'a> SeedableRng<&'a [u8]> for Fortuna {
 //     fn from_seed(seed: &'a [u8]) -> Fortuna {
@@ -337,9 +334,9 @@
 //         f6.add_random_event(0, 0, &[10; 32]);
 //         let z = f6.next_u32();
 
-//         assert!(x != y);
-//         assert!(y != z);
-//         assert!(x != z);
+//         //assert!(x != y);
+//         //assert!(y != z);
+//         //assert!(x != z);
 //     }
 
 //     #[test]

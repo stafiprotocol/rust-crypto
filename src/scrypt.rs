@@ -11,11 +11,10 @@
 //  * [1] - C. Percival. Stronger Key Derivation Via Sequential Memory-Hard Functions.
 //  *       http://www.tarsnap.com/scrypt/scrypt.pdf
 //  */
-
-// use std;
-// use std::iter::repeat;
-// use std::io;
-// use std::mem::size_of;
+// use sr_std;
+// use sr_std::iter::repeat;
+// use sr_std::io;
+// use sr_std::mem::size_of;
 // use cryptoutil::copy_memory;
 
 // use rand::{OsRng, Rng};
@@ -159,11 +158,11 @@
 //      *
 //      */
 //     pub fn new(log_n: u8, r: u32, p: u32) -> ScryptParams {
-//         assert!(r > 0);
-//         assert!(p > 0);
-//         assert!(log_n > 0);
-//         assert!((log_n as usize) < size_of::<usize>() * 8);
-//         assert!(size_of::<usize>() >= size_of::<u32>() || (r <= std::usize::MAX as u32 && p < std::usize::MAX as u32));
+//         //assert!(r > 0);
+//         //assert!(p > 0);
+//         //assert!(log_n > 0);
+//         //assert!((log_n as usize) < size_of::<usize>() * 8);
+//         //assert!(size_of::<usize>() >= size_of::<u32>() || (r <= core::usize::MAX as u32 && p < core::usize::MAX as u32));
 
 //         let r = r as usize;
 //         let p = p as usize;
@@ -191,13 +190,13 @@
 //         // This check required by Scrypt:
 //         // check: n < 2^(128 * r / 8)
 //         // r * 16 won't overflow since r128 didn't
-//         assert!((log_n as usize) < r * 16);
+//         //assert!((log_n as usize) < r * 16);
 
 //         // This check required by Scrypt:
 //         // check: p <= ((2^32-1) * 32) / (128 * r)
 //         // It takes a bit of re-arranging to get the check above into this form, but, it is indeed
 //         // the same.
-//         assert!(r * p < 0x40000000);
+//         //assert!(r * p < 0x40000000);
 
 //         ScryptParams {
 //             log_n: log_n,
@@ -221,8 +220,8 @@
 // pub fn scrypt(password: &[u8], salt: &[u8], params: &ScryptParams, output: &mut [u8]) {
 //     // This check required by Scrypt:
 //     // check output.len() > 0 && output.len() <= (2^32 - 1) * 32
-//     assert!(output.len() > 0);
-//     assert!(output.len() / 32 <= 0xffffffff);
+//     //assert!(output.len() > 0);
+//     //assert!(output.len() / 32 <= 0xffffffff);
 
 //     // The checks in the ScryptParams constructor guarantee that the following is safe:
 //     let n = 1 << params.log_n;
@@ -406,7 +405,7 @@
 
 // #[cfg(test)]
 // mod test {
-//     use std::iter::repeat;
+//     use sr_std::iter::repeat;
 
 //     use scrypt::{scrypt, scrypt_simple, scrypt_check, ScryptParams};
 
@@ -481,7 +480,7 @@
 //             let mut result: Vec<u8> = repeat(0).take(t.expected.len()).collect();
 //             let params = ScryptParams::new(t.log_n, t.r, t.p);
 //             scrypt(t.password.as_bytes(), t.salt.as_bytes(), &params, &mut result);
-//             assert!(result == t.expected);
+//             //assert!(result == t.expected);
 //         }
 //     }
 
@@ -494,23 +493,23 @@
 
 //         // This just makes sure that a salt is being applied. It doesn't verify that that salt is
 //         // cryptographically strong, however.
-//         assert!(out1 != out2);
+//         //assert!(out1 != out2);
 
 //         match scrypt_check(password, &out1[..]) {
-//             Ok(r) => assert!(r),
+//             Ok(r) => //assert!(r),
 //             Err(_) => panic!()
 //         }
 //         match scrypt_check(password, &out2[..]) {
-//             Ok(r) => assert!(r),
+//             Ok(r) => //assert!(r),
 //             Err(_) => panic!()
 //         }
 
 //         match scrypt_check("wrong", &out1[..]) {
-//             Ok(r) => assert!(!r),
+//             Ok(r) => //assert!(!r),
 //             Err(_) => panic!()
 //         }
 //         match scrypt_check("wrong", &out2[..]) {
-//             Ok(r) => assert!(!r),
+//             Ok(r) => //assert!(!r),
 //             Err(_) => panic!()
 //         }
 //     }

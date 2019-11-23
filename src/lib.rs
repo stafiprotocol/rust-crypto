@@ -5,18 +5,27 @@
 // except according to those terms.
 
 #![cfg_attr(feature = "with-bench", feature(test))]
-#![cfg_attr(all(not(test), not(feature = "std")), no_std)]
+//#![cfg_attr(all(not(test), not(feature = "core")), no_core)]
 
-#[cfg(any(test, feature="std"))] extern crate core;
+//#[cfg(any(test, feature = "core"))]
+#![cfg_attr(not(feature = "std"), feature(core_intrinsics))]
+
+#[cfg(not(feature = "std"))]
+extern crate core;
+
+extern crate sr_std;
 
 // extern crate rand;
-extern crate hex;
-extern crate time;
-extern crate libc;
 extern crate base64;
+extern crate hex;
+extern crate libc;
+extern crate time;
 
 #[cfg(all(test, feature = "with-bench"))]
 extern crate test;
+
+use sr_std::marker::*;
+use sr_std::prelude::*;
 
 pub mod aead;
 pub mod aes;
@@ -38,8 +47,8 @@ pub mod ed25519;
 pub mod fortuna;
 pub mod ghash;
 pub mod hc128;
-pub mod hmac;
 pub mod hkdf;
+pub mod hmac;
 pub mod mac;
 pub mod md5;
 pub mod pbkdf2;

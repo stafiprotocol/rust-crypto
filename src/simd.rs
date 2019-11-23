@@ -21,7 +21,9 @@ impl SimdExt for fake::u32x4 {
 }
 
 mod fake {
-    use std::ops::{Add, BitAnd, BitOr, BitXor, Shl, Shr, Sub};
+    use sr_std::marker::*;
+    use sr_std::ops::{Add, BitAnd, BitOr, BitXor, Shl, Shr, Sub};
+    use sr_std::prelude::*;
 
     #[derive(Clone, Copy, PartialEq, Eq)]
     #[allow(non_camel_case_types)]
@@ -35,7 +37,8 @@ mod fake {
                 self.0.wrapping_add(rhs.0),
                 self.1.wrapping_add(rhs.1),
                 self.2.wrapping_add(rhs.2),
-                self.3.wrapping_add(rhs.3))
+                self.3.wrapping_add(rhs.3),
+            )
         }
     }
 
@@ -47,7 +50,8 @@ mod fake {
                 self.0.wrapping_sub(rhs.0),
                 self.1.wrapping_sub(rhs.1),
                 self.2.wrapping_sub(rhs.2),
-                self.3.wrapping_sub(rhs.3))
+                self.3.wrapping_sub(rhs.3),
+            )
         }
     }
 
@@ -55,7 +59,12 @@ mod fake {
         type Output = u32x4;
 
         fn bitand(self, rhs: u32x4) -> u32x4 {
-            u32x4(self.0 & rhs.0, self.1 & rhs.1, self.2 & rhs.2, self.3 & rhs.3)
+            u32x4(
+                self.0 & rhs.0,
+                self.1 & rhs.1,
+                self.2 & rhs.2,
+                self.3 & rhs.3,
+            )
         }
     }
 
@@ -63,7 +72,12 @@ mod fake {
         type Output = u32x4;
 
         fn bitor(self, rhs: u32x4) -> u32x4 {
-            u32x4(self.0 | rhs.0, self.1 | rhs.1, self.2 | rhs.2, self.3 | rhs.3)
+            u32x4(
+                self.0 | rhs.0,
+                self.1 | rhs.1,
+                self.2 | rhs.2,
+                self.3 | rhs.3,
+            )
         }
     }
 
@@ -71,7 +85,12 @@ mod fake {
         type Output = u32x4;
 
         fn bitxor(self, rhs: u32x4) -> u32x4 {
-            u32x4(self.0 ^ rhs.0, self.1 ^ rhs.1, self.2 ^ rhs.2, self.3 ^ rhs.3)
+            u32x4(
+                self.0 ^ rhs.0,
+                self.1 ^ rhs.1,
+                self.2 ^ rhs.2,
+                self.3 ^ rhs.3,
+            )
         }
     }
 
@@ -87,7 +106,12 @@ mod fake {
         type Output = u32x4;
 
         fn shl(self, rhs: u32x4) -> u32x4 {
-            u32x4(self.0 << rhs.0, self.1 << rhs.1, self.2 << rhs.2, self.3 << rhs.3)
+            u32x4(
+                self.0 << rhs.0,
+                self.1 << rhs.1,
+                self.2 << rhs.2,
+                self.3 << rhs.3,
+            )
         }
     }
 
@@ -103,7 +127,12 @@ mod fake {
         type Output = u32x4;
 
         fn shr(self, rhs: u32x4) -> u32x4 {
-            u32x4(self.0 >> rhs.0, self.1 >> rhs.1, self.2 >> rhs.2, self.3 >> rhs.3)
+            u32x4(
+                self.0 >> rhs.0,
+                self.1 >> rhs.1,
+                self.2 >> rhs.2,
+                self.3 >> rhs.3,
+            )
         }
     }
 
