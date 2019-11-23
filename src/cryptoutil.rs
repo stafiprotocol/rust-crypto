@@ -222,11 +222,11 @@ pub trait WriteExt {
 }
 
 pub trait Write {
-    fn write_all(&mut self, mut buf: &[u8]) -> ();
+    fn write_all(&mut self, buf: &[u8]) -> ();
 }
 
 impl Write for Vec<u8> {
-    fn write_all(&mut self, mut buf: &[u8]) -> () {
+    fn write_all(&mut self, buf: &[u8]) -> () {
         self.extend_from_slice(buf);
     }
 }

@@ -130,8 +130,6 @@ impl Blake2s {
     }
 
     fn apply_param(&mut self) {
-        use cryptoutil::{Write, WriteExt};
-
         let mut param_bytes: [u8; 32] = [0; 32];
         {
             //            let mut writer: &mut [u8] = &mut param_bytes;

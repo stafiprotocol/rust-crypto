@@ -8,6 +8,7 @@
  * The mac module defines the Message Authentication Code (Mac) trait.
  */
 
+use sr_std::prelude::*;
 use util::fixed_time_eq;
 
 /**
@@ -50,7 +51,7 @@ pub trait Mac {
  * A MacResult wraps a Mac code and provides a safe Eq implementation that runs in fixed time.
  */
 pub struct MacResult {
-    code: Vec<u8>
+    code: Vec<u8>,
 }
 
 impl MacResult {
@@ -59,7 +60,7 @@ impl MacResult {
      */
     pub fn new(code: &[u8]) -> MacResult {
         MacResult {
-            code: code.to_vec()
+            code: code.to_vec(),
         }
     }
 
@@ -67,9 +68,7 @@ impl MacResult {
      * Create a new MacResult taking ownership of the specified code value.
      */
     pub fn new_from_owned(code: Vec<u8>) -> MacResult {
-        MacResult {
-            code: code
-        }
+        MacResult { code: code }
     }
 
     /**
@@ -89,4 +88,4 @@ impl PartialEq for MacResult {
     }
 }
 
-impl Eq for MacResult { }
+impl Eq for MacResult {}

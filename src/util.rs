@@ -4,8 +4,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use libc;
-
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 extern "C" {
     pub fn rust_crypto_util_supports_aesni() -> u32;

@@ -9,6 +9,7 @@
 // except according to those terms.
 
 use sr_std::iter::repeat;
+use sr_std::prelude::*;
 
 /**
  * The Digest trait specifies an interface common to digest functions, such as SHA-1 and the SHA-2
@@ -71,6 +72,7 @@ pub trait Digest {
      * Convenience function that retrieves the result of a digest as a
      * String in hexadecimal format.
      */
+    #[cfg(any(feature = "std", test))]
     fn result_str(&mut self) -> String {
         let mut buf: Vec<u8> = repeat(0).take((self.output_bits() + 7) / 8).collect();
         self.result(&mut buf);

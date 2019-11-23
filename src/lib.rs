@@ -13,7 +13,6 @@
 
 #[cfg(not(feature = "std"))]
 extern crate core;
-
 extern crate sr_std;
 
 // extern crate rand;
@@ -24,9 +23,6 @@ extern crate time;
 
 #[cfg(all(test, feature = "with-bench"))]
 extern crate test;
-
-use sr_std::marker::*;
-use sr_std::prelude::*;
 
 pub mod aead;
 pub mod aes;

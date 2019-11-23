@@ -13,6 +13,7 @@ use sr_std::iter::repeat;
 use cryptoutil;
 use digest::Digest;
 use mac::{Mac, MacResult};
+use sr_std::prelude::*;
 
 /**
  * The Hmac struct represents an Hmac function - a Message Authentication Code using a Digest.
