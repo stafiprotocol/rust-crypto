@@ -5,6 +5,9 @@
 // except according to those terms.
 
 #![cfg_attr(feature = "with-bench", feature(test))]
+#![cfg_attr(all(not(test), not(feature = "std")), no_std)]
+
+#[cfg(any(test, feature="std"))] extern crate core;
 
 // extern crate rand;
 extern crate hex;
