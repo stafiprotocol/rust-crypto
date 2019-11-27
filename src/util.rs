@@ -17,6 +17,7 @@ pub fn supports_aesni() -> bool {
 }
 
 extern "C" {
+    #[cfg(any(target_arch = "x86", target_arch = "x86_64", target_arch = "arm"))]
     pub fn rust_crypto_util_fixed_time_eq_asm(
         lhsp: *const u8,
         rhsp: *const u8,
@@ -37,13 +38,23 @@ pub fn fixed_time_eq(lhs: &[u8], rhs: &[u8]) -> bool {
     if lhs.len() != rhs.len() {
         false
     } else {
-        let count = lhs.len() as usize;
+        fixed_time_eq_internal(lhs, rhs)
+    }
+}
 
-        unsafe {
-            let lhsp = lhs.get_unchecked(0);
-            let rhsp = rhs.get_unchecked(0);
-            rust_crypto_util_fixed_time_eq_asm(lhsp, rhsp, count) == 0
-        }
+#[cfg(not(any(target_arch = "x86", target_arch = "x86_64", target_arch = "arm")))]
+pub fn fixed_time_eq_internal(lhs: &[u8], rhs: &[u8]) -> bool {
+    lhs == rhs
+}
+
+#[cfg(any(target_arch = "x86", target_arch = "x86_64", target_arch = "arm"))]
+pub fn fixed_time_eq_internal(lhs: &[u8], rhs: &[u8]) -> bool {
+    let count = lhs.len() as usize;
+
+    unsafe {
+        let lhsp = lhs.get_unchecked(0);
+        let rhsp = rhs.get_unchecked(0);
+        rust_crypto_util_fixed_time_eq_asm(lhsp, rhsp, count) == 0
     }
 }
 
